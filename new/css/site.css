@@ -33,7 +33,7 @@ html[lang="ar"] {
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
-html, body { overflow-x: clip; }
+html, body, main, .site-foot { overflow-x: clip; }
 body { margin: 0; background: var(--cream); color: var(--ink); font: 400 17px/1.65 var(--body); }
 html[lang="ar"] body { font-size: 18px; line-height: 1.85; }
 img { max-width: 100%; height: auto; display: block; }
@@ -571,7 +571,7 @@ html[lang="ar"] .fcol h2 { letter-spacing: 0; font-size: .95rem; }
 .rv-on [data-rv="end"] { transform: translate3d(64px, 0, 0); }
 .rv-on[dir="rtl"] [data-rv="start"] { transform: translate3d(64px, 0, 0); }
 .rv-on[dir="rtl"] [data-rv="end"] { transform: translate3d(-64px, 0, 0); }
-.rv-on [data-rv].rv-in { opacity: 1; transform: none; }
+:root.rv-on [data-rv].rv-in { opacity: 1; transform: none; }
 /* arched and framed photos settle with a slow zoom as they arrive */
 .rv-on [data-rv] :is(.arch, .cb-a, .catmag-media, .pstep-media) img { transform: scale(1.08); transition: transform 1.6s cubic-bezier(.2, .7, .2, 1); }
 .rv-on [data-rv].rv-in :is(.arch, .cb-a, .catmag-media, .pstep-media) img { transform: none; }
