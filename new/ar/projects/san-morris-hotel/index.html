@@ -73,13 +73,26 @@
 </div></section>
 <section class="sec sand"><div class="wrap">
   <header class="sec-head "><p class="eyebrow">معرض الصور</p><h2>مساحات مختارة</h2></header>
-  <ul class="gallery"><li><button class="gal-btn" type="button" data-full="/new/img/sm-triple-lg.webp" data-cap="غرفة ثلاثية، فندق San Morris"><img class="" src="/new/img/sm-triple-800.webp" srcset="/new/img/sm-triple-800.webp 800w, /new/img/sm-triple-lg.webp 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1600" height="1200" alt="غرفة ثلاثية، فندق San Morris" loading="lazy" decoding="async"></button></li><li><button class="gal-btn" type="button" data-full="/new/img/sm-room-lg.webp" data-cap="غرفة نزلاء مع دُش بفاصل زجاجي، فندق San Morris"><img class="" src="/new/img/sm-room-800.webp" srcset="/new/img/sm-room-800.webp 800w, /new/img/sm-room-lg.webp 1500w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1500" height="1124" alt="غرفة نزلاء مع دُش بفاصل زجاجي، فندق San Morris" loading="lazy" decoding="async"></button></li><li><button class="gal-btn" type="button" data-full="/new/img/sm-sitting-lg.webp" data-cap="ركن الجلوس، فندق San Morris"><img class="" src="/new/img/sm-sitting-800.webp" srcset="/new/img/sm-sitting-800.webp 800w, /new/img/sm-sitting-lg.webp 1300w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1300" height="975" alt="ركن الجلوس، فندق San Morris" loading="lazy" decoding="async"></button></li></ul>
+  <div class="gal-wrap">
+    <ul class="gallery" id="gallery" aria-label="صور المشروع"><li><button class="gal-btn" type="button" data-full="/new/img/sm-triple-lg.webp" data-cap="غرفة ثلاثية، فندق San Morris"><img class="" src="/new/img/sm-triple-800.webp" srcset="/new/img/sm-triple-800.webp 800w, /new/img/sm-triple-lg.webp 1600w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1600" height="1200" alt="غرفة ثلاثية، فندق San Morris" loading="lazy" decoding="async"></button></li><li><button class="gal-btn" type="button" data-full="/new/img/sm-room-lg.webp" data-cap="غرفة نزلاء مع دُش بفاصل زجاجي، فندق San Morris"><img class="" src="/new/img/sm-room-800.webp" srcset="/new/img/sm-room-800.webp 800w, /new/img/sm-room-lg.webp 1500w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1500" height="1124" alt="غرفة نزلاء مع دُش بفاصل زجاجي، فندق San Morris" loading="lazy" decoding="async"></button></li><li><button class="gal-btn" type="button" data-full="/new/img/sm-sitting-lg.webp" data-cap="ركن الجلوس، فندق San Morris"><img class="" src="/new/img/sm-sitting-800.webp" srcset="/new/img/sm-sitting-800.webp 800w, /new/img/sm-sitting-lg.webp 1300w" sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 33vw" width="1300" height="975" alt="ركن الجلوس، فندق San Morris" loading="lazy" decoding="async"></button></li></ul>
+    <div class="gal-nav" aria-hidden="true">
+      <button class="gal-arrow gal-prev" type="button" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <span class="gal-count" dir="ltr"><b class="gal-i">1</b> / 3</span>
+      <button class="gal-arrow gal-next" type="button" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <p class="gal-hint">اسحب لرؤية المزيد · اضغط على الصورة لتكبيرها</p>
+  </div>
 </div></section>
 <section class="sec"><div class="wrap nextp">
   <a href="/new/ar/projects/san-morris-cafe/" class="nextp-a"><span class="eyebrow">المشروع التالي</span><span class="nextp-n">San Morris Café <span aria-hidden="true">←</span></span><span class="muted">فلسطين</span></a>
   <a class="more" href="/new/ar/projects/">كل المشاريع <span aria-hidden="true">←</span></a>
 </div></section>
-<dialog class="lightbox" id="lightbox"><form method="dialog"><button class="lb-close" type="submit" aria-label="إغلاق">×</button></form><img alt=""><p class="lb-cap"></p></dialog><section class="sec trio-sec"><div class="wrap">
+<dialog class="lightbox" id="lightbox" aria-label="عارض الصور">
+  <form method="dialog"><button class="lb-close" type="submit" aria-label="إغلاق">×</button></form>
+  <button class="lb-arrow lb-prev" type="button" aria-label="الصورة السابقة"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <figure class="lb-fig"><img alt=""><figcaption class="lb-cap"></figcaption></figure>
+  <button class="lb-arrow lb-next" type="button" aria-label="الصورة التالية"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+</dialog><section class="sec trio-sec"><div class="wrap">
   <div class="trio-head"><h2>تريدون نتيجة مماثلة لمشروع San Morris Hotel؟</h2><p>اختاروا الطريقة التي تناسبكم، ونردّ عليكم بالعربية أو الإنجليزية أو التركية.</p></div>
   <div class="trio">
     <a class="trio-card trio-main" href="/new/ar/contact/" data-track="proj_trio_quote">

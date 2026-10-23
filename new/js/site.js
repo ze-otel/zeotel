@@ -49,17 +49,47 @@
     });
   });
 
-  /* ---- gallery lightbox */
+  /* ---- project gallery: swipe strip on phones, lightbox with previous/next everywhere */
+  var rtl = html.dir === "rtl";
+  var gal = doc.getElementById("gallery");
+  var items = gal ? [].slice.call(gal.querySelectorAll(".gal-btn")) : [];
   var lb = doc.getElementById("lightbox");
-  if (lb && lb.showModal) {
-    var lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".lb-cap");
-    doc.querySelectorAll(".gal-btn").forEach(function (b) {
-      b.addEventListener("click", function () {
-        lbImg.src = b.getAttribute("data-full"); lbImg.alt = b.getAttribute("data-cap"); lbCap.textContent = b.getAttribute("data-cap");
-        lb.showModal();
-      });
+  if (gal && items.length) {
+    var wrap = gal.closest(".gal-wrap"), counter = wrap.querySelector(".gal-i");
+    var step = function () { var li = gal.querySelector("li"); return li ? li.getBoundingClientRect().width + 12 : 1; };
+    var current = function () { return Math.min(items.length - 1, Math.max(0, Math.round(Math.abs(gal.scrollLeft) / step()))); };
+    gal.addEventListener("scroll", function () { if (counter) counter.textContent = current() + 1; }, { passive: true });
+    var go = function (d) { gal.scrollBy({ left: (rtl ? -1 : 1) * d * step(), behavior: "smooth" }); };
+    var gp = wrap.querySelector(".gal-prev"), gn = wrap.querySelector(".gal-next");
+    if (gp) gp.addEventListener("click", function () { go(-1); });
+    if (gn) gn.addEventListener("click", function () { go(1); });
+  }
+  if (lb && lb.showModal && items.length) {
+    var lbImg = lb.querySelector("img"), lbCap = lb.querySelector(".lb-cap"), idx = 0;
+    var show = function (i) {
+      idx = (i + items.length) % items.length;
+      var b = items[idx];
+      lbImg.src = b.getAttribute("data-full"); lbImg.alt = b.getAttribute("data-cap");
+      lbCap.textContent = b.getAttribute("data-cap") + "  ·  " + (idx + 1) + " / " + items.length;
+    };
+    items.forEach(function (b, i) {
+      b.addEventListener("click", function () { show(i); lb.showModal(); track("gallery_open"); });
+    });
+    lb.querySelector(".lb-prev").addEventListener("click", function () { show(idx - 1); });
+    lb.querySelector(".lb-next").addEventListener("click", function () { show(idx + 1); });
+    lb.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") show(idx + (rtl ? -1 : 1));
+      if (e.key === "ArrowLeft") show(idx + (rtl ? 1 : -1));
     });
     lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+    var sx = null, sy = 0;
+    lb.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    lb.addEventListener("touchend", function (e) {
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) show(idx + ((dx < 0) !== rtl ? 1 : -1));
+      else if (dy > 90) lb.close();
+    });
   }
 
   /* ---- scroll reveal: chosen sections glide in from the side as they enter the screen.
@@ -83,7 +113,7 @@
       [".pstep .pstep-body", "up"],
       [".trio .trio-card", "up", 100],
       [".pd-facts", "start"], [".pcta", "end"],
-      [".gallery li", "up", 60],
+      [".gal-wrap", "up"],
       [".locs .loc", "up", 90], [".mcards .mcard", "up", 50], [".toc li", "up", 70], [".dl-card", "up", 100],
       [".three li", "up", 90], [".mats li", "up", 50], [".reflist li", "up", 50]
     ];
