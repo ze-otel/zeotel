@@ -194,7 +194,7 @@ html[lang="ar"] :is(.facts, .pd-facts) dt { letter-spacing: 0; font-size: .92rem
 
 /* spaces */
 .spaces { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px; }
-.space { display: flex; flex-direction: column; background: var(--paper); border-radius: var(--r); overflow: hidden; text-decoration: none; color: inherit; transition: transform .3s, box-shadow .3s; }
+.space { display: flex; flex-direction: column; background: var(--paper); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .3s, box-shadow .3s; }
 .space:hover { transform: translateY(-4px); box-shadow: var(--shadow); color: inherit; }
 .space-media { overflow: hidden; }
 .space-media img { aspect-ratio: 3 / 2; object-fit: cover; width: 100%; transition: transform .6s; }
@@ -219,7 +219,7 @@ html[lang="ar"] .why-head blockquote { font-style: normal; font-size: 1.6rem; }
 .pcards { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 26px; }
 .pcard { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
 .pcard[hidden] { display: none; }
-.pcard-media { overflow: hidden; border-radius: var(--r); }
+.pcard-media { overflow: hidden; border-radius: 16px; }
 .pcard-media img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; transition: transform .6s; }
 .pcard:hover .pcard-media img { transform: scale(1.04); }
 .pcard-body { padding-top: 16px; }
@@ -563,6 +563,14 @@ html[lang="ar"] .fcol h2 { letter-spacing: 0; font-size: .95rem; }
   .hero .ctas .btn, .phero .ctas .btn { width: 100%; }
   .cta-inline { padding: 16px; }
 }
+
+
+/* buttons inside the mobile menu keep button styling (white text, icon on the same line) */
+.mainnav .nav-mobile-extra .btn { display: inline-flex; align-items: center; justify-content: center; gap: .55em; padding: 12px 24px; font-size: 1rem; font-weight: 600; color: #fff; border-bottom: 0; border-radius: var(--r); white-space: nowrap; box-shadow: none; }
+.mainnav .nav-mobile-extra .btn-primary, .mainnav .nav-mobile-extra .btn-primary:hover { background: var(--orange-text); color: #fff; }
+.mainnav .nav-mobile-extra .btn-primary:hover { background: var(--orange-dark); }
+.mainnav .nav-mobile-extra .btn-wa, .mainnav .nav-mobile-extra .btn-wa:hover { background: var(--wa); color: #fff; }
+.mainnav .nav-mobile-extra .btn-wa:hover { background: #17603c; }
 
 /* scroll reveal (activated by site.js; "start" = from the reading side, mirrored in Arabic) */
 .rv-on [data-rv] { opacity: 0; transition: opacity .9s cubic-bezier(.2, .7, .2, 1), transform 1.1s cubic-bezier(.2, .7, .2, 1); will-change: opacity, transform; }
