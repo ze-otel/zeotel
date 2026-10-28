@@ -142,6 +142,38 @@
     setTimeout(function () { targets.forEach(function (el) { var r = el.getBoundingClientRect(); if (r.top < window.innerHeight) el.classList.add("rv-in"); }); }, 2500);
   }
 
+  /* ---- assembly video: load when near, play once when half visible, step labels follow the playback */
+  var av = doc.querySelector(".assemble-media video");
+  if (av) {
+    var steps = [].slice.call(doc.querySelectorAll(".assemble-steps li"));
+    var replay = doc.querySelector(".assemble-replay");
+    var lightUp = function (n) { steps.forEach(function (s, i) { s.classList.toggle("on", i < n); }); };
+    var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var slow = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType || ""));
+    var showEnd = function () { av.poster = av.getAttribute("data-poster-end"); lightUp(steps.length); };
+    if (still || slow || !("IntersectionObserver" in window)) { showEnd(); }
+    else {
+      var size = window.matchMedia("(max-width: 860px)").matches ? "sm" : "lg";
+      var loaded = false, played = false;
+      var load = function () {
+        if (loaded) return; loaded = true;
+        av.innerHTML = '<source src="' + av.getAttribute("data-" + size + "-webm") + '" type="video/webm"><source src="' + av.getAttribute("data-" + size + "-mp4") + '" type="video/mp4">';
+        av.preload = "auto"; av.load();
+      };
+      var play = function () {
+        var pr = av.play();
+        if (pr && pr.catch) pr.catch(showEnd);
+        track("assembly_video_play");
+      };
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting) { load(); o.disconnect(); } }, { rootMargin: "400px 0px" }).observe(av);
+      new IntersectionObserver(function (es, o) { if (es[0].isIntersecting && !played) { played = true; load(); play(); o.disconnect(); } }, { threshold: 0.5 }).observe(av);
+      av.addEventListener("timeupdate", function () { if (av.duration) lightUp(Math.min(steps.length, Math.floor(av.currentTime / av.duration * steps.length) + 1)); });
+      av.addEventListener("ended", function () { lightUp(steps.length); if (replay) replay.hidden = false; });
+      av.addEventListener("error", showEnd, true);
+      if (replay) replay.addEventListener("click", function () { replay.hidden = true; lightUp(0); av.currentTime = 0; play(); });
+    }
+  }
+
   /* ---- first-touch attribution (30 days), copied into every form */
   var KEY = "zeotel_attr", attr = null, q = new URLSearchParams(location.search);
   try { attr = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}

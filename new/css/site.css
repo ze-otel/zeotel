@@ -577,6 +577,21 @@ html[lang="ar"] .fcol h2 { letter-spacing: 0; font-size: .95rem; }
 .mainnav .nav-mobile-extra .btn-wa, .mainnav .nav-mobile-extra .btn-wa:hover { background: var(--wa); color: #fff; }
 .mainnav .nav-mobile-extra .btn-wa:hover { background: #17603c; }
 
+
+/* assembly video (home): plays once when it comes into view */
+.assemble-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+.assemble-media { position: relative; margin: 0; }
+.assemble-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r); background: #ECE6DE; box-shadow: var(--shadow); }
+.assemble-media figcaption { font-size: .8rem; color: var(--muted); margin-top: 8px; }
+.assemble-replay { position: absolute; inset-inline-end: 14px; bottom: 44px; min-height: 40px; padding: 8px 16px; border: 0; border-radius: var(--r-sm); background: rgba(58, 15, 23, .82); color: #fff; font: 600 .9rem var(--body); cursor: pointer; }
+.assemble-replay:hover { background: var(--wine); }
+.assemble-steps { list-style: none; margin: 22px 0 26px; padding: 0; display: grid; gap: 10px; counter-reset: s; }
+.assemble-steps li { counter-increment: s; display: flex; align-items: center; gap: 12px; color: var(--muted); font-weight: 500; transition: color .4s; }
+.assemble-steps li::before { content: counter(s); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line-strong); color: var(--muted); font: 600 .85rem var(--body); transition: background .4s, color .4s, border-color .4s; flex: none; }
+.assemble-steps li.on { color: var(--wine-900); }
+.assemble-steps li.on::before { background: var(--orange-text); border-color: var(--orange-text); color: #fff; }
+@media (max-width: 860px) { .assemble-in { grid-template-columns: minmax(0, 1fr); } .assemble-media { order: -1; } }
+
 /* scroll reveal (activated by site.js; "start" = from the reading side, mirrored in Arabic) */
 .rv-on [data-rv] { opacity: 0; transition: opacity .9s cubic-bezier(.2, .7, .2, 1), transform 1.1s cubic-bezier(.2, .7, .2, 1); will-change: opacity, transform; }
 .rv-on [data-rv="up"] { transform: translate3d(0, 34px, 0); }
