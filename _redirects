@@ -1,0 +1,31 @@
+# Old site URLs -> new pages (301 = permanent, keeps Google rankings and shared links working)
+/index.html                      /                          301
+/arabic                          /ar/                       301
+/arabic.html                     /ar/                       301
+/about.html                      /about/                    301
+/about-ar                        /ar/about/                 301
+/about-ar.html                   /ar/about/                 301
+/services.html                   /services/                 301
+/services-ar                     /ar/services/              301
+/services-ar.html                /ar/services/              301
+/referances                      /projects/                 301
+/referances.html                 /projects/                 301
+/referances-ar                   /ar/projects/              301
+/referances-ar.html              /ar/projects/              301
+/gallery                         /projects/                 301
+/gallery.html                    /projects/                 301
+/gallery-ar                      /ar/projects/              301
+/gallery-ar.html                 /ar/projects/              301
+/catalogue.html                  /catalogue/                301
+/catalogue-ar                    /ar/catalogue/             301
+/catalogue-ar.html               /ar/catalogue/             301
+/image/ZE-OTELKatalogWeb.pdf     /downloads/ZE-OTEL-FFE-Catalogue-2026.pdf   301
+/image/*                         /                          301
+/style.css                       /                          301
+/quote                           /contact/                  301
+/ar/quote                        /ar/contact/               301
+/ksa                             /saudi-arabia/             301
+/ar/ksa                          /ar/saudi-arabia/          301
+# The preview lived under /new/ before launch
+/new                             /                          301
+/new/*                           /:splat                    301
