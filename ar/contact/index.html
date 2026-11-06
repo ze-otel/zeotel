@@ -66,7 +66,7 @@
     </div>
     <div class="frow">
       <p class="fld"><label for="f-email">البريد الإلكتروني *</label><input id="f-email" name="email" type="email" autocomplete="email" required dir="ltr"></p>
-      <p class="fld"><label for="f-phone">الهاتف أو واتساب</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" dir="ltr" placeholder="+966 …"></p>
+      <div class="fld"><p class="fld"><label for="f-phone">الهاتف أو واتساب</label><div class="tel" data-tel><button class="tel-cc" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="f-phone-list"><span class="tel-flag" aria-hidden="true"></span><span class="tel-dial" dir="ltr">+966</span><svg class="tel-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><input id="f-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" dir="ltr"><input type="hidden" name="phone_country" value=""><div class="tel-pop" hidden><input class="tel-search" type="search" placeholder="ابحث بالاسم أو الرمز" aria-label="ابحث بالاسم أو الرمز" aria-controls="f-phone-list" autocomplete="off" dir="auto"><ul class="tel-list" id="f-phone-list" role="listbox" aria-label="قائمة الدول"></ul></div></div></div>
     </div>
     <div class="frow">
       <p class="fld"><label for="f-role">صفتكم</label><select id="f-role" name="role"><option value="">اختر من القائمة</option><option value="owner">مالك أو مطوّر</option><option value="designer">مصمم داخلي أو معماري</option><option value="contractor">مقاول أو شركة تجهيزات داخلية</option><option value="procurement">مشغّل أو إدارة مشتريات</option><option value="other">أخرى</option></select></p>

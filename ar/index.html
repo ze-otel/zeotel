@@ -165,14 +165,15 @@
   <input type="hidden" name="form-name" value="quick-quote"><input type="hidden" name="lang" value="ar"><input type="hidden" name="page" value="/ar/"><input type="hidden" name="ref" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="landing_page" value=""><input type="hidden" name="referrer" value=""><p class="hp" aria-hidden="true"><label>اترك هذا الحقل فارغاً <input name="company_website" tabindex="-1" autocomplete="off"></label></p>
   <div class="frow">
     <p class="fld"><label for="home-name">الاسم</label><input id="home-name" name="name" autocomplete="name" required></p>
-    <p class="fld"><label for="home-contact">البريد الإلكتروني أو رقم واتساب</label><input id="home-contact" name="contact" autocomplete="email" required dir="auto"></p>
+    <p class="fld"><label for="home-email">البريد الإلكتروني <span class="opt">أو الهاتف أدناه</span></label><input id="home-email" name="email" type="email" autocomplete="email" dir="ltr" data-need-contact></p>
   </div>
   <div class="frow">
+    <div class="fld"><label for="home-phone">الهاتف أو واتساب</label><div class="tel" data-tel><button class="tel-cc" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="home-phone-list"><span class="tel-flag" aria-hidden="true"></span><span class="tel-dial" dir="ltr">+966</span><svg class="tel-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><input id="home-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" dir="ltr"><input type="hidden" name="phone_country" value=""><div class="tel-pop" hidden><input class="tel-search" type="search" placeholder="ابحث بالاسم أو الرمز" aria-label="ابحث بالاسم أو الرمز" aria-controls="home-phone-list" autocomplete="off" dir="auto"><ul class="tel-list" id="home-phone-list" role="listbox" aria-label="قائمة الدول"></ul></div></div></div>
     <p class="fld"><label for="home-type">نوع المشروع</label><select id="home-type" name="project_type" required><option value="">اختر من القائمة</option><option value="hotel">فندق أو منتجع</option><option value="apartments">شقق فندقية</option><option value="restaurant">مطعم أو مقهى</option><option value="office">مكاتب أو قاعات اجتماعات</option><option value="renovation">تجديد منشأة قائمة</option><option value="other">أخرى</option></select></p>
-    <p class="fld"><label for="home-size">عدد الغرف أو الوحدات أو المقاعد <span class="opt">اختياري</span></label><input id="home-size" name="size" inputmode="numeric"></p>
   </div>
+  <p class="fld"><label for="home-size">عدد الغرف أو الوحدات أو المقاعد <span class="opt">اختياري</span></label><input id="home-size" name="size" inputmode="numeric"></p>
   <p class="fld"><label for="home-msg">المدينة ونبذة عن المشروع <span class="opt">اختياري</span></label><textarea id="home-msg" name="message" rows="3"></textarea></p>
-  <p class="ferr" role="alert" hidden>يرجى إدخال الاسم، والبريد الإلكتروني أو رقم واتساب، ونوع المشروع.</p>
+  <p class="ferr" role="alert" hidden>يرجى إدخال الاسم، والبريد الإلكتروني أو رقم الهاتف، ونوع المشروع.</p>
   <div class="fsubmit"><button class="btn btn-primary" type="submit" data-track="quick_quote_submit">احصل على عرض السعر</button>
   <p class="fnote">دون أي التزام، ونستخدم بياناتكم للرد فقط. لديكم مخططات؟ <a href="/ar/contact/">أرفقوها هنا</a>.</p></div>
 </form>

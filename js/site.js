@@ -186,6 +186,90 @@
     try { localStorage.setItem(KEY, JSON.stringify(attr)); } catch (e) {}
   }
 
+  /* ---- phone field with searchable country code (all countries; our markets first) */
+  (function () {
+    var RAW = "AC247,AD376,AE971,AF93,AG1,AI1,AL355,AM374,AO244,AR54,AS1,AT43,AU61,AW297,AX358,AZ994,BA387,BB1,BD880,BE32,BF226,BG359,BH973,BI257,BJ229,BL590,BM1,BN673,BO591,BQ599,BR55,BS1,BT975,BW267,BY375,BZ501,CA1,CC61,CD243,CF236,CG242,CH41,CI225,CK682,CL56,CM237,CN86,CO57,CR506,CU53,CV238,CW599,CX61,CY357,CZ420,DE49,DJ253,DK45,DM1,DO1,DZ213,EC593,EE372,EG20,EH212,ER291,ES34,ET251,FI358,FJ679,FK500,FM691,FO298,FR33,GA241,GB44,GD1,GE995,GF594,GG44,GH233,GI350,GL299,GM220,GN224,GP590,GQ240,GR30,GT502,GU1,GW245,GY592,HK852,HN504,HR385,HT509,HU36,ID62,IE353,IL972,IM44,IN91,IO246,IQ964,IR98,IS354,IT39,JE44,JM1,JO962,JP81,KE254,KG996,KH855,KI686,KM269,KN1,KP850,KR82,KW965,KY1,KZ7,LA856,LB961,LC1,LI423,LK94,LR231,LS266,LT370,LU352,LV371,LY218,MA212,MC377,MD373,ME382,MF590,MG261,MH692,MK389,ML223,MM95,MN976,MO853,MP1,MQ596,MR222,MS1,MT356,MU230,MV960,MW265,MX52,MY60,MZ258,NA264,NC687,NE227,NF672,NG234,NI505,NL31,NO47,NP977,NR674,NU683,NZ64,OM968,PA507,PE51,PF689,PG675,PH63,PK92,PL48,PM508,PR1,PS970,PT351,PW680,PY595,QA974,RE262,RO40,RS381,RU7,RW250,SA966,SB677,SC248,SD249,SE46,SG65,SH290,SI386,SJ47,SK421,SL232,SM378,SN221,SO252,SR597,SS211,ST239,SV503,SX1,SY963,SZ268,TA290,TC1,TD235,TG228,TH66,TJ992,TK690,TL670,TM993,TN216,TO676,TR90,TT1,TV688,TW886,TZ255,UA380,UG256,US1,UY598,UZ998,VA39,VC1,VE58,VG1,VI1,VN84,VU678,WF681,WS685,XK383,YE967,YT262,ZA27,ZM260,ZW263";
+    var TOP = ["SA", "AE", "QA", "KW", "BH", "OM", "JO", "LB", "LY", "TR", "PS"];
+    var EX = { SA: "51 234 5678", AE: "50 123 4567", QA: "3312 3456", KW: "500 12345", BH: "3600 1234", OM: "9212 3456", JO: "7 9012 3456", LB: "71 123 456", LY: "91 234 5678", TR: "501 234 56 78", PS: "599 123 456" };
+    var COUNTRY_FIELD = { "saudi-arabia": "SA", uae: "AE", qatar: "QA", kuwait: "KW", bahrain: "BH", oman: "OM", jordan: "JO", lebanon: "LB", libya: "LY", turkey: "TR", palestine: "PS" };
+    var nameEn = null, nameAr = null;
+    try { nameEn = new Intl.DisplayNames(["en"], { type: "region" }); nameAr = new Intl.DisplayNames(["ar"], { type: "region" }); } catch (e) {}
+    var list = RAW.split(",").map(function (x) {
+      var iso = x.slice(0, 2), dial = x.slice(2);
+      var en = nameEn ? nameEn.of(iso) : iso, arn = nameAr ? nameAr.of(iso) : iso;
+      return { iso: iso, dial: dial, en: en, ar: arn, flag: String.fromCodePoint.apply(null, iso.split("").map(function (c) { return 127397 + c.charCodeAt(0); })) };
+    });
+    var byIso = {}; list.forEach(function (c) { byIso[c.iso] = c; });
+    var collator = new Intl.Collator(ar ? "ar" : "en");
+    var ordered = TOP.map(function (i) { return byIso[i]; }).filter(Boolean)
+      .concat(list.filter(function (c) { return TOP.indexOf(c.iso) < 0; }).sort(function (a, b) { return collator.compare(ar ? a.ar : a.en, ar ? b.ar : b.en); }));
+    var guess = (function () {
+      var langs = navigator.languages || [navigator.language || ""];
+      for (var i = 0; i < langs.length; i++) { var m = /-([A-Z]{2})$/i.exec(langs[i]); if (m && byIso[m[1].toUpperCase()] && TOP.indexOf(m[1].toUpperCase()) > -1) return m[1].toUpperCase(); }
+      return "SA";
+    })();
+    var norm = function (s) { return (s || "").toLowerCase().replace(/[ً-ْـ]/g, "").replace(/[أإآ]/g, "ا").replace(/ة/g, "ه").replace(/ى/g, "ي"); };
+
+    doc.querySelectorAll("[data-tel]").forEach(function (box, n) {
+      var btn = box.querySelector(".tel-cc"), input = box.querySelector("input[type=tel]"), isoIn = box.querySelector("input[name=phone_country]");
+      var pop = box.querySelector(".tel-pop"), search = box.querySelector(".tel-search"), ul = box.querySelector(".tel-list");
+      var current = null, active = -1, shown = [];
+      var set = function (iso, focus) {
+        current = byIso[iso] || byIso.SA;
+        btn.querySelector(".tel-flag").textContent = current.flag;
+        btn.querySelector(".tel-dial").textContent = "+" + current.dial;
+        btn.setAttribute("aria-label", (ar ? "رمز الدولة: " + current.ar : "Country code: " + current.en) + " +" + current.dial);
+        input.placeholder = EX[current.iso] || "";
+        if (isoIn) isoIn.value = current.iso;
+        if (focus) input.focus();
+      };
+      var render = function (q) {
+        var t = norm(q.trim()).replace(/^\+/, "");
+        shown = !t ? ordered : ordered.filter(function (c) {
+          return norm(c.en).indexOf(t) > -1 || norm(c.ar).indexOf(t) > -1 || c.dial.indexOf(t) === 0 || c.iso.toLowerCase() === t;
+        });
+        ul.innerHTML = shown.length ? shown.map(function (c, i) {
+          var sep = !t && i === TOP.length ? ' class="tel-sep"' : "";
+          return '<li role="option" id="tel' + n + "-" + c.iso + '" data-iso="' + c.iso + '"' + sep + ' aria-selected="' + (current && c.iso === current.iso) + '"><span class="tel-flag">' + c.flag + '</span><span class="tel-name">' + (ar ? c.ar : c.en) + '</span><span class="tel-code" dir="ltr">+' + c.dial + "</span></li>";
+        }).join("") : '<li class="tel-none">' + (ar ? "لا توجد نتائج" : "No results") + "</li>";
+        active = -1;
+      };
+      var mark = function (i) {
+        var items = ul.querySelectorAll("li[data-iso]"); if (!items.length) return;
+        active = (i + items.length) % items.length;
+        items.forEach(function (li, k) { li.classList.toggle("on", k === active); });
+        items[active].scrollIntoView({ block: "nearest" });
+        search.setAttribute("aria-activedescendant", items[active].id);
+      };
+      var open = function () { pop.hidden = false; btn.setAttribute("aria-expanded", "true"); search.value = ""; render(""); search.focus(); };
+      var close = function (back) { pop.hidden = true; btn.setAttribute("aria-expanded", "false"); if (back) btn.focus(); };
+      btn.addEventListener("click", function () { pop.hidden ? open() : close(true); });
+      search.addEventListener("input", function () { render(search.value); if (search.value) mark(0); });
+      search.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowDown") { e.preventDefault(); mark(active + 1); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); mark(active - 1); }
+        else if (e.key === "Enter") { e.preventDefault(); var li = ul.querySelectorAll("li[data-iso]")[active < 0 ? 0 : active]; if (li) { set(li.getAttribute("data-iso"), true); close(); } }
+        else if (e.key === "Escape") { e.preventDefault(); close(true); }
+      });
+      ul.addEventListener("click", function (e) { var li = e.target.closest("li[data-iso]"); if (li) { set(li.getAttribute("data-iso"), true); close(); track("phone_country_pick"); } });
+      doc.addEventListener("click", function (e) { if (!pop.hidden && !box.contains(e.target)) close(); });
+      // follow the form's country field when the visitor picks a country
+      var form = box.closest("form"), cf = form && form.querySelector("select[name=country]");
+      if (cf) cf.addEventListener("change", function () { var iso = COUNTRY_FIELD[cf.value]; if (iso && !input.value.trim()) set(iso); });
+      // typing a full international number (+971…) switches the code automatically
+      input.addEventListener("input", function () {
+        var v = input.value.replace(/[^\d+]/g, "");
+        if (v.charAt(0) === "+") { for (var len = 4; len >= 1; len--) { var d = v.slice(1, 1 + len), hit = list.filter(function (c) { return c.dial === d; }); if (hit.length) { var pick = hit.filter(function (c) { return TOP.indexOf(c.iso) > -1; })[0] || hit[0]; set(pick.iso); input.value = input.value.replace(/^\s*\+\s*\d{1,4}[\s-]*/, "").replace(/^\+/, ""); break; } } }
+      });
+      // on submit the phone is sent in full international form
+      if (form) form.addEventListener("submit", function () {
+        var v = input.value.trim();
+        if (v && v.charAt(0) !== "+") input.value = "+" + current.dial + " " + v.replace(/^0+/, "");
+      }, true);
+      set(guess);
+    });
+  })();
+
   /* ---- forms */
   doc.querySelectorAll("form[data-form]").forEach(function (f) {
     ["utm_source", "utm_medium", "utm_campaign", "utm_content", "landing_page", "referrer"].forEach(function (k) {
@@ -209,6 +293,13 @@
         el.classList.toggle("invalid", !v); el.setAttribute("aria-invalid", v ? "false" : "true");
         if (!v) { ok = false; first = first || el; }
       });
+      // quick form: an email OR a phone number is enough
+      if (f.querySelector("[data-need-contact]")) {
+        var em = f.querySelector('input[name="email"]'), ph = f.querySelector('input[name="phone"]');
+        var emOk = !!em && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim()), phOk = !!ph && ph.value.replace(/\D/g, "").length >= 6;
+        var anyOk = emOk || phOk;
+        [em, ph].forEach(function (x) { if (x) { var bad = !anyOk || (x === em && !!x.value.trim() && !emOk); x.classList.toggle("invalid", bad); x.setAttribute("aria-invalid", bad ? "true" : "false"); if (bad) { ok = false; first = first || x; } } });
+      }
       var err = f.querySelector(".ferr:not(.ferr-file)"); if (err) err.hidden = ok;
       var file = f.querySelector('input[type="file"]'), fe = f.querySelector(".ferr-file");
       if (file && file.files[0] && file.files[0].size > 8 * 1024 * 1024) { ok = false; if (fe) fe.hidden = false; first = first || file; }

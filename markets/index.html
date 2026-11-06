@@ -63,14 +63,15 @@
   <input type="hidden" name="form-name" value="quick-quote"><input type="hidden" name="lang" value="en"><input type="hidden" name="page" value="/markets/"><input type="hidden" name="ref" value=""><input type="hidden" name="utm_source" value=""><input type="hidden" name="utm_medium" value=""><input type="hidden" name="utm_campaign" value=""><input type="hidden" name="utm_content" value=""><input type="hidden" name="landing_page" value=""><input type="hidden" name="referrer" value=""><p class="hp" aria-hidden="true"><label>Leave this empty <input name="company_website" tabindex="-1" autocomplete="off"></label></p>
   <div class="frow">
     <p class="fld"><label for="mk-name">Your name</label><input id="mk-name" name="name" autocomplete="name" required></p>
-    <p class="fld"><label for="mk-contact">Email or WhatsApp number</label><input id="mk-contact" name="contact" autocomplete="email" required dir="auto"></p>
+    <p class="fld"><label for="mk-email">Email <span class="opt">or phone below</span></label><input id="mk-email" name="email" type="email" autocomplete="email" dir="ltr" data-need-contact></p>
   </div>
   <div class="frow">
+    <div class="fld"><label for="mk-phone">Phone or WhatsApp</label><div class="tel" data-tel><button class="tel-cc" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="mk-phone-list"><span class="tel-flag" aria-hidden="true"></span><span class="tel-dial" dir="ltr">+966</span><svg class="tel-caret" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><input id="mk-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" dir="ltr"><input type="hidden" name="phone_country" value=""><div class="tel-pop" hidden><input class="tel-search" type="search" placeholder="Search country or code" aria-label="Search country or code" aria-controls="mk-phone-list" autocomplete="off" dir="auto"><ul class="tel-list" id="mk-phone-list" role="listbox" aria-label="Countries"></ul></div></div></div>
     <p class="fld"><label for="mk-type">Project type</label><select id="mk-type" name="project_type" required><option value="">Choose one</option><option value="hotel">Hotel or resort</option><option value="apartments">Serviced apartments</option><option value="restaurant">Restaurant or café</option><option value="office">Office or meeting rooms</option><option value="renovation">Renovation of an existing property</option><option value="other">Other</option></select></p>
-    <p class="fld"><label for="mk-size">Rooms, units or seats <span class="opt">optional</span></label><input id="mk-size" name="size" inputmode="numeric"></p>
   </div>
+  <p class="fld"><label for="mk-size">Rooms, units or seats <span class="opt">optional</span></label><input id="mk-size" name="size" inputmode="numeric"></p>
   <p class="fld"><label for="mk-msg">City and a few words about the project <span class="opt">optional</span></label><textarea id="mk-msg" name="message" rows="3"></textarea></p>
-  <p class="ferr" role="alert" hidden>Please add your name, an email or WhatsApp number, and the project type.</p>
+  <p class="ferr" role="alert" hidden>Please add your name, an email or a phone number, and the project type.</p>
   <div class="fsubmit"><button class="btn btn-primary" type="submit" data-track="quick_quote_submit">Get my quotation</button>
   <p class="fnote">No obligation. We use your details only to reply. Have drawings? <a href="/contact/">Attach them here</a>.</p></div>
 </form></div></div></div></section>
