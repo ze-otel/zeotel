@@ -645,3 +645,11 @@ html[lang="ar"] .fcol h2 { letter-spacing: 0; font-size: .95rem; }
 .tel-code { color: var(--muted); font-variant-numeric: tabular-nums; }
 .tel-none { padding: 12px; color: var(--muted); cursor: default; }
 .tel .invalid, .tel input.invalid { border-color: #B3261E !important; }
+
+/* Narrow phones: the logo scales down so the language and menu buttons always fit on screen */
+@media (max-width: 560px) {
+  .head-in { gap: 12px; }
+  .brand { flex: 0 1 200px; min-width: 0; }
+  .brand img { width: 100%; max-width: 200px; }
+  .head-actions { flex: none; gap: 8px; }
+}
