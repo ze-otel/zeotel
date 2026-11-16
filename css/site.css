@@ -653,3 +653,6 @@ html[lang="ar"] .fcol h2 { letter-spacing: 0; font-size: .95rem; }
   .brand img { width: 100%; max-width: 200px; }
   .head-actions { flex: none; gap: 8px; }
 }
+
+/* Sticky mobile bar: WhatsApp on the left in English too (Arabic already has it on the left) */
+html[dir="ltr"] .dock .btn-wa { order: -1; }
